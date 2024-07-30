@@ -1,0 +1,25 @@
+<html>
+<head>
+    <title>OSU - CS 340 - Introduction to Databases - Flask Demo Project</title>
+</head>
+<body>
+    <table>
+    <thead>
+    <tr>
+        <th>Name</th>
+        <th>Age</th>
+        <th>Location</th>
+        <th>Favorite Language</th>
+    </tr>
+    <tbody>
+    {% for item in people %}
+    <tr>
+        <td>{{item['name']}}</td>
+        <td>{{item['age']}}</td>
+        <td>{{item['location']}}</td>
+        <td>{{item['favorite_color']}}</td>
+    </tr>
+    {% endfor %}
+    </table>
+</body>
+</html>

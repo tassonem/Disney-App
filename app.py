@@ -25,61 +25,69 @@ def home():
 
 
 # route for people page
-@app.route("/people", methods=["POST", "GET"])
-def people():
+@app.route("/rides", methods=["POST", "GET"])
+def rides():
     # Separate out the request methods, in this case this is for a POST
     # insert a person into the bsg_people entity
     if request.method == "POST":
         # fire off if user presses the Add Person button
-        if request.form.get("Add_Person"):
+        if request.form.get("Add_Ride"):
             # grab user form inputs
-            fname = request.form["fname"]
-            lname = request.form["lname"]
-            homeworld = request.form["homeworld"]
-            age = request.form["age"]
+            ride_name = request.form["ride_name"]
+            park_id = request.form["park_id"]
+            height_restriction = request.form["height_restriction"]
+            lightning_lane = request.form["lightning_lane"]
+            ride_length = request.form["ride_length"]
 
-            # account for null age AND homeworld
-            if age == "" and homeworld == "0":
+            # account for null height_restriction AND lightning_lane AND ride_length
+            if height_restriction == "" and lightning_lane == "" and ride_length == "":
                 # mySQL query to insert a new person into bsg_people with our form inputs
-                query = "INSERT INTO bsg_people (fname, lname) VALUES (%s, %s)"
+                query = "INSERT INTO Rides (ride_name, park_id) VALUES (%s, %s)"
                 cur = mysql.connection.cursor()
-                cur.execute(query, (fname, lname))
+                cur.execute(query, (ride_name, park_id))
                 mysql.connection.commit()
 
-            # account for null homeworld
-            elif homeworld == "0":
-                query = "INSERT INTO bsg_people (fname, lname, age) VALUES (%s, %s,%s)"
+            # account for null height_restriction
+            elif height_restriction == "":
+                query = "INSERT INTO Rides (ride_name, park_id, lightning_lane, ride_length) VALUES (%s, %s, %s, %s)"
                 cur = mysql.connection.cursor()
-                cur.execute(query, (fname, lname, age))
+                cur.execute(query, (ride_name, park_id, lightning_lane, ride_length))
                 mysql.connection.commit()
 
-            # account for null age
-            elif age == "":
-                query = "INSERT INTO bsg_people (fname, lname, homeworld) VALUES (%s, %s,%s)"
+            # account for null lightning_lane
+            elif lightning_lane == "":
+                query = "INSERT INTO Rides (ride_name, park_id, height_restriction, ride_length) VALUES (%s, %s, %s, %s)"
                 cur = mysql.connection.cursor()
-                cur.execute(query, (fname, lname, homeworld))
+                cur.execute(query, (ride_name, park_id, height_restriction, ride_length))
+                mysql.connection.commit()
+
+            # account for null ride_length
+            elif ride_length == "":
+                query = "INSERT INTO Rides (ride_name, park_id, height_restriction, lightning_lane) VALUES (%s, %s, %s, %s)"
+                cur = mysql.connection.cursor()
+                cur.execute(query, (ride_name, park_id, height_restriction, lightning_lane))
                 mysql.connection.commit()
 
             # no null inputs
             else:
-                query = "INSERT INTO bsg_people (fname, lname, homeworld, age) VALUES (%s, %s,%s,%s)"
+                query = "INSERT INTO Rides (ride_name, park_id, height_restriction, lightning_lane, ride_length) VALUES (%s, %s,%s,%s, %s)"
                 cur = mysql.connection.cursor()
-                cur.execute(query, (fname, lname, homeworld, age))
+                cur.execute(query, (ride_name, park_id, height_restriction, lightning_lane, ride_length))
                 mysql.connection.commit()
 
             # redirect back to people page
-            return redirect("/people")
+            return redirect("/rides")
 
     # Grab bsg_people data so we send it to our template to display
     if request.method == "GET":
         # mySQL query to grab all the people in bsg_people
-        query = "SELECT bsg_people.id, fname, lname, bsg_planets.name AS homeworld, age FROM bsg_people LEFT JOIN bsg_planets ON homeworld = bsg_planets.id"
+        query = "SELECT Rides.id, ride_name, height_restriction, lightning_lane, ride_length, Parks.park_name AS park FROM Rides LEFT JOIN Parks ON park_id = Parks.park_id"
         cur = mysql.connection.cursor()
         cur.execute(query)
         data = cur.fetchall()
 
-        # mySQL query to grab planet id/name data for our dropdown
-        query2 = "SELECT id, name FROM bsg_planets"
+        # mySQL query to grab park id/name data for our dropdown
+        query2 = "SELECT park_id, park_name FROM Parks"
         cur = mysql.connection.cursor()
         cur.execute(query2)
         homeworld_data = cur.fetchall()
@@ -165,12 +173,6 @@ def edit_people(id):
             return redirect("/people")
 
 
-# @app.route('/bsg-people')
-# def bsg_people():
-#     query = "SELECT * FROM bsg_people;"
-#     cursor = db.execute_query(db_connection=db_connection, query=query)
-#     results = cursor.fetchall()
-#     return render_template("bsg.j2", bsg_people=results)
 
 # Listener
 

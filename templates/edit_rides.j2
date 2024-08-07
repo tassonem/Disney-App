@@ -39,27 +39,27 @@
 
         <div id="edit">
             <!-- form to edit data in bsg_people-->
-            <form id="editRide" action="/edit_ride/{{data[0].id}}" method="post">
+            <form id="edit_ride" action="/edit_ride/{{data[0].rideID}}" method="post">
                 <legend><strong>Edit Ride</strong></legend>
                 <fieldset>
                     <!-- We can preset form inputs to match attributes currently stored for 'id' of person to be updated via value= and accessing our passed data tuple -->
                     <!-- Create hidden form input to store the passed 'id' of the person we are editing so we can access it easily in our 'POST' method in our app.py -->
-                    <input type="hidden" value="{{data[0].ride_id}}" class="form-control" id="ride_id" name="ride_id" required>
-                    <label for="ride_id">Ride ID:</label>
+                    <input type="hidden" value="{{data[0].rideID}}" class="form-control" id="rideID" name="rideID" pattern="[0-4]{1}" required>
 
-                    <input type="text" value="{{data[0].ride_name}}" class="form-control" id="ride_name" name="ride_name" pattern="[A-Za-z]{1,}" required>
                     <label for="ride_name">Ride name:</label>
-
-                    <input type="text" value="{{data[0].height_restriction}}" class="form-control" id="height_restriction" name="height_restriction" pattern="[A-Za-z0-9]{1,}">
+                    <input type="text" value="{{data[0].ride_name}}" class="form-control" id="ride_name" name="ride_name" pattern="[A-Za-z]{1,}" required>
+                    
                     <label for="height_restriction">Height Restriction:</label>
-
-                    <input type="text" value="{{data[0].lightning_lane}}" class="form-control" id="lightning_lane" name="lightning_lane" pattern="[A-Za-z0-9]{1,}">
+                    <input type="text" value="{{data[0].height_restriction}}" class="form-control" id="height_restriction" name="height_restriction" pattern="[A-Za-z0-9]{1,}">
+                    
                     <label for="lightning_lane">Lightning Lane:</label>
-
-                    <input type="text" value="{{data[0].ride_length}}" class="form-control" id="ride_length" name="ride_length" pattern="[A-Za-z0-9]{1,}">
+                    <input type="text" value="{{data[0].lightning_lane}}" class="form-control" id="lightning_lane" name="lightning_lane" pattern="[A-Za-z0-9]{1,}">
+                    
                     <label for="ride_length">Ride Length:</label>
-
-                    <select class="form-control" id="parks" name="parks" pattern="[0-4]{1}" placeholder="" required> 
+                    <input type="text" value="{{data[0].ride_length}}" class="form-control" id="ride_length" name="ride_length" pattern="[A-Za-z0-9]{1,}">
+                    
+                    <label for="parks">Parks</label>
+                    <select class="form-control" id="parks" name="parks" pattern="[0-4]{1}" placeholder=""> 
                         <!-- Access our parks tuple passed from app.py-->
                         <option value="0">&nbsp;</option>
                         {% for park in parks %}
@@ -77,7 +77,7 @@
                         
                 
                 </fieldset>
-                <input type="submit" value="Edit Ride" name="Edit_Ride" class="btn btn-primary" style="margin:.5rem;">
+                <input type="submit" value="edit_ride" name="edit_ride" class="btn btn-primary" style="margin:.5rem;">
                 <a href='/rides'><input class="btn" type="button" value="cancel"></a>
             </form>
 

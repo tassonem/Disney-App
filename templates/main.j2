@@ -1,25 +1,18 @@
 <html>
 <head>
-    <title>OSU - CS 340 - Introduction to Databases - Flask Demo Project</title>
+<title>Home Page</title>
+<link href="style.css" rel="stylesheet" type="text/css" />
 </head>
+
 <body>
-    <table>
-    <thead>
-    <tr>
-        <th>Name</th>
-        <th>Age</th>
-        <th>Location</th>
-        <th>Favorite Language</th>
-    </tr>
-    <tbody>
-    {% for item in people %}
-    <tr>
-        <td>{{item['name']}}</td>
-        <td>{{item['age']}}</td>
-        <td>{{item['location']}}</td>
-        <td>{{item['favorite_color']}}</td>
-    </tr>
-    {% endfor %}
-    </table>
+<h1>Home Page</h1>
+
+[ <a href="parks.html">Parks</a> | <a href ='{{ url_for('rides')}}'>Rides</a> | <a href="visitors.html">Visitors</a> | <a href="restaurants.html">Restaurants</a> | <a href="touring_plans.html">Touring Plans</a>  ]
+
+<p>Parks page displays all parks and allows user to insert a new park</p>
+<p>Rides page displays all rides and allows user to insert a new ride with a dropdown for park name</p>
+<p>Visitors page displays all visitors and allows user to insert a new visitor</p>
+<p>Restuarants page displays all restaurants and allows user to insert a new restaurant, update a restaurant, and delete a restaurant.</p>
+<p>Touring Plans page displays all touring plans and allows user to insert a new touring plan.</p>
 </body>
 </html>

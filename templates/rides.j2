@@ -37,15 +37,15 @@
 		}
 	}
 
-	function newRides() {
+	function newRide() {
 		showform('insert');
 	}
 
-	function updateRide(ride_id) {
+	function updateRide(rideID) {
 		showform('update');
 	}
 
-	function deleteRide(ride_id) {
+	function deleteRide(rideID) {
 		showform('delete');
 	}
 
@@ -60,7 +60,8 @@
 </head>
 
 <body onload="browseRide()">
-	<h1>Rides</h1> [ Parks | <a href="rides">Rides</a> | Restaurants | Touring Plans ]
+	<h1>Rides</h1> [ <a href=" {{ url_for('home')}}">Home</a> |<a href="parks.html">Parks</a> | <a href="rides">Rides</a> | Restaurants | Touring Plans ]
+
 	<div id="browse">
 		<p><a href="#" onClick="newRide()">Add New</a> </p>
 		<table border="1" cellpadding="5">
@@ -89,8 +90,8 @@
                             {% endfor %}
 
                             <!-- Create our edit/delete buttons -->
-						    <td><a href="edit_ride/{{item.id}}" class="btn btn-default">Edit</a></td>
-						    <td><a href="delete_ride/{{item.id}}" class="btn btn-default">Delete</a></td>
+						    <td><a href="edit_ride/{{item.rideID}}" class="btn btn-default">Edit</a></td>
+						    <td><a href="delete_ride/{{item.rideID}}" class="btn btn-default">Delete</a></td>
 
 					    </tr> 
                         {% endfor %} 
@@ -138,10 +139,10 @@
 	</div><!--insert-->
 	<div id="edit">
 		<!-- form to edit data in Rides-->
-		<form id="editRides" action="/edit_rides/{{data[0].id}}" method="post">
+		<form id="editRides" action="/edit_rides/{{data[0].rideID}}" method="post">
 			<legend><strong>Edit Ride</strong></legend>
 			<fieldset>
-				<input type="hidden" value="{{data[0].id}}" class="form-control" id="rideID" name="rideID" required>
+				<input type="hidden" value="{{data[0].rideID}}" class="form-control" id="rideID" name="rideID" required>
 				<label for="make">ride name:</label>
 
 				<input type="text" class="form-control" id="ride_name" name="ride_name" pattern="[A-Za-z]{1,}" placeholder="{{data[0].ride_name}}" required>
